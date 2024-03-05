@@ -1,23 +1,15 @@
 const express = require('express');
-const app = express();
 const session = require('express-session');
+const app = express();
+const routes = require('./routes');
 
 require('dotenv').config();
 
 const mongoose = require('mongoose');
-const db = mongoose.connection;
 const mongo_store = require('connect-mongo');
-const User = require('./models/user.js');
+const db = mongoose.connection;
 
 const passport = require('passport');
-
-////////////////////////////////////////////////////////////////////
-
-mongoose.connect(process.env.DB_URL).then(() => {
-    console.log('connected to the database');
-}).catch((err) => {
-    console.log(err);
-});
 
 ////////////////////////////////////////////////////////////////////
 
@@ -38,24 +30,12 @@ app.use(session({
 
 ////////////////////////////////////////////////////////////////////
 
-app.get('/', (req, res) => {
-    res.redirect('/login');
-});
+require('./config/passport');
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.get('/login', (req, res) => {
-    res.sendFile('pages/account-form.html', {root: __dirname});
-});
+app.use(routes);
 
-app.post('/login', (req, res) => {
-    const {username, password} = req.body;
-
-    if (username == "test" && password == "tset") res.redirect('/board');
-    else res.send("Bledne dane");
-
-});
-
-app.get('/board', (req, res) => {
-    res.sendFile('pages/board.html', {root: __dirname});
-});
+// error handler here
 
 app.listen(process.env.PORT);
