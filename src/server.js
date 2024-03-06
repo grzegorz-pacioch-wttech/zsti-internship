@@ -10,6 +10,7 @@ const mongo_store = require('connect-mongo');
 const db = mongoose.connection;
 
 const passport = require('passport');
+const path = require('path');
 
 ////////////////////////////////////////////////////////////////////
 
@@ -34,6 +35,8 @@ require('./config/passport');
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 app.use(routes);
 
 // error handler here
