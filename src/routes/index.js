@@ -4,6 +4,8 @@ const { Hash_Password } = require('../lib/hash_utilities');
 const { is_auth } = require('../lib/middlewares/auth_check');
 const User = require('../models/user');
 
+/////////////////////////////////////////////////////////////////////
+
 router.post('/login', passport.authenticate('local', {failureRedirect: '/fail', successRedirect: '/board'}), (req, res) => {});
 
 router.post('/register', (req, res) => {
@@ -54,6 +56,13 @@ router.get('/fail', (req, res) =>
 
 router.get('/board', is_auth, (req, res) => {
     res.render('board');
+});
+
+router.get('*', (req, res) => {
+    res.status(404).json({
+        status: res.statusCode,
+        msg: 'Error: Page not found'
+    });
 });
 
 module.exports = router;
