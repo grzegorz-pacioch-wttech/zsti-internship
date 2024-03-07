@@ -7,8 +7,9 @@ const User = require('../models/user');
 router.post('/login', passport.authenticate('local', {failureRedirect: '/fail', successRedirect: '/board'}), (req, res) => {});
 
 router.post('/register', (req, res) => {
-    const salt_hash = Hash_Password(req.body.password);
+    const password = req.body.password.trim();
     const username = req.body.username.trim();
+    const salt_hash = Hash_Password(password);
 
     const new_user = new User({
         username: username,
@@ -21,7 +22,6 @@ router.post('/register', (req, res) => {
     {
         new_user.save()
         .then(user => console.log('Nowy uzytkownik: ' + user))
-        // .catch(err => console.log(err));
 
         res.redirect('/login');
     }
