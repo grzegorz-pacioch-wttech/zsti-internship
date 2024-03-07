@@ -1,10 +1,10 @@
 {
-  "name": "test_app",
+  "name": "kanban_app",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "nodemon": "nodemon src/server.js"
+    "nodemon": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",

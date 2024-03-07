@@ -1,11 +1,10 @@
 const router = require('express').Router();
 const passport = require('passport');
 const { Hash_Password } = require('../lib/hash_utilities');
+const { is_auth } = require('../lib/middlewares/auth_check');
 const User = require('../models/user');
 
 router.post('/login', passport.authenticate('local', {failureRedirect: '/fail', successRedirect: '/board'}), (req, res) => {});
-
-let msg = '';
 
 router.post('/register', (req, res) => {
     const salt_hash = Hash_Password(req.body.password);
@@ -22,7 +21,7 @@ router.post('/register', (req, res) => {
     {
         new_user.save()
         .then(user => console.log('Nowy uzytkownik: ' + user))
-        .catch(err => console.log(err));
+        // .catch(err => console.log(err));
 
         res.redirect('/login');
     }
@@ -36,11 +35,11 @@ router.get('/', (req, res) => {
 });
 
 router.get('/register', (req, res) => {
-    res.render('account-form', {message: msg});
+    res.render('account-form');
 });
 
 router.get('/login', (req, res) => {
-    res.render('account-form', {message: msg});
+    res.render('account-form');
 });
 
 router.get('/success', (req, res) => 
@@ -53,7 +52,7 @@ router.get('/fail', (req, res) =>
     res.send('fail');
 });
 
-router.get('/board', (req, res) => {
+router.get('/board', is_auth, (req, res) => {
     res.render('board');
 });
 

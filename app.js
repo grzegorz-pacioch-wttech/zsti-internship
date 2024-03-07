@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const app = express();
-const routes = require('./routes');
+const routes = require('./src/routes');
 
 require('dotenv').config();
 
@@ -31,14 +31,16 @@ app.use(session({
 
 ////////////////////////////////////////////////////////////////////
 
-require('./config/passport');
+require('./src/config/passport');
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '/src/views'));
 app.use(routes);
 
-// error handler here
+app.use((err, req, res) => {
+    res.json({err: err});
+});
 
 app.listen(process.env.PORT);
