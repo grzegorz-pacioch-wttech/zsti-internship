@@ -11,6 +11,7 @@ router.post('/login', passport.authenticate('local', {failureRedirect: '/fail', 
 router.post('/register', /*if_exists,*/ (req, res) => {
     const password = req.body.password.trim();
     const username = req.body.username.trim();
+
     const salt_hash = Hash_Password(password);
 
     const new_user = new User({
