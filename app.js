@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const mongoose = require('mongoose');
 const mongo_store = require('connect-mongo');
-const db = mongoose.connection;
+const db = require('./src/config/db');
 
 const passport = require('passport');
 const path = require('path');

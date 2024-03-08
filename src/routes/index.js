@@ -1,14 +1,14 @@
 const router = require('express').Router();
 const passport = require('passport');
 const { Hash_Password } = require('../lib/hash_utilities');
-const { is_auth } = require('../lib/middlewares/auth_check');
+const { is_auth/*, if_exists*/ } = require('../lib/middlewares/auth_check');
 const User = require('../models/user');
 
 /////////////////////////////////////////////////////////////////////
 
 router.post('/login', passport.authenticate('local', {failureRedirect: '/fail', successRedirect: '/board'}), (req, res) => {});
 
-router.post('/register', (req, res) => {
+router.post('/register', /*if_exists,*/ (req, res) => {
     const password = req.body.password.trim();
     const username = req.body.username.trim();
     const salt_hash = Hash_Password(password);
@@ -19,15 +19,10 @@ router.post('/register', (req, res) => {
         salt: salt_hash.salt
     });
 
-    if (User.exists({username: username})) res.send('Podana nazwa użytkownika już istnieje');
-    else
-    {
-        new_user.save()
-        .then(user => console.log('Nowy uzytkownik: ' + user))
+    new_user.save()
+    .then(user => console.log('Nowy uzytkownik: ' + user));
 
-        res.redirect('/login');
-    }
-    
+    res.redirect('/login');   
 });
 
 ///////////////////////////////////////////////////////////////////
@@ -44,7 +39,7 @@ router.get('/login', (req, res) => {
     res.render('account-form');
 });
 
-router.get('/success', (req, res) => 
+    router.get('/success', (req, res) => 
 {
     res.send('success');
 });

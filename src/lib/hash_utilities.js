@@ -9,6 +9,6 @@ module.exports.Hash_Password = (password) => {
 
 module.exports.Validate_Password = (password, hash, salt) => {
     const hash_verify = pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
-    return hash != hash_verify;
+    return hash == hash_verify;
 }
 
