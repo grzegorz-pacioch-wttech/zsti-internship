@@ -9,8 +9,8 @@ const User = require('../models/user');
 router.post('/login', passport.authenticate('local', {failureRedirect: '/fail', successRedirect: '/board'}), (req, res) => {});
 
 router.post('/register', /*if_exists,*/ (req, res) => {
-    const password = req.body.password.trim();
-    const username = req.body.username.trim();
+    const password = req.body.reg_password.trim();
+    const username = req.body.reg_username.trim();
 
     const salt_hash = Hash_Password(password);
 
@@ -23,24 +23,20 @@ router.post('/register', /*if_exists,*/ (req, res) => {
     new_user.save()
     .then(user => console.log('Nowy uzytkownik: ' + user));
 
-    res.redirect('/login');   
+    res.redirect('/sign-user');   
 });
 
 ///////////////////////////////////////////////////////////////////
 
 router.get('/', (req, res) => {
-    res.redirect('/register');
+    res.redirect('/sign-user');
 });
 
-router.get('/register', (req, res) => {
+router.get('/sign-user', (req, res) => {
     res.render('account-form');
 });
 
-router.get('/login', (req, res) => {
-    res.render('account-form');
-});
-
-    router.get('/success', (req, res) => 
+router.get('/success', (req, res) => 
 {
     res.send('success');
 });

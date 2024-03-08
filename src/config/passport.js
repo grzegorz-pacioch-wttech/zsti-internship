@@ -18,7 +18,7 @@ const Verify = (username, password, next) => {
         .catch(err => next(err));
 };
 
-const strategy = new local_strategy(Verify);
+const strategy = new local_strategy({usernameField: 'log_username', passwordField: 'log_password'}, Verify);
 
 passport.use(strategy);
 
