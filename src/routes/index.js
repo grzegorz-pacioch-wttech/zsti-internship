@@ -3,6 +3,7 @@ const passport = require('passport');
 const { Hash_Password } = require('../lib/hash_utilities');
 const { is_auth/*, if_exists*/ } = require('../lib/middlewares/auth_check');
 const User = require('../models/user');
+const Task = require('../models/task');
 
 /////////////////////////////////////////////////////////////////////
 
@@ -24,6 +25,20 @@ router.post('/register', /*if_exists,*/ (req, res) => {
     .then(user => console.log('Nowy uzytkownik: ' + user));
 
     res.redirect('/sign-user');   
+});
+
+router.post('/board', (req, res) => {
+    const new_task = new Task({
+        title: req.body.taskName,
+        description: req.body.taskDescription,
+        image: req.body.taskImg,
+        creation_date: Date.now(),
+        end_date: req.body.taskDeadline,
+        // assigned_userId: req.body.user,
+        creatorId: req.user._id
+    });
+
+    new_task.save();
 });
 
 ///////////////////////////////////////////////////////////////////
