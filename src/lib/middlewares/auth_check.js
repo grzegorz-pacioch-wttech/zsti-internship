@@ -11,6 +11,6 @@ module.exports.is_auth = (req, res, next) => {
 module.exports.if_exists = async (req, res, next) => {
     const username = req.body.reg_username.trim();
     const exists = await User.exists({username: username});
-    if (exists != null) res.json({msg: 'Podana nazwa użytkownika już istnieje'});
+    if (exists != null) res.json({msg: 'Error: username already exists'});
     else next();
 };

@@ -8,7 +8,7 @@ const Board = require('../models/board');
 
 /////////////////////////////////////////////////////////////////////
 
-router.post('/login', passport.authenticate('local', {failureRedirect: '/fail', successRedirect: '/boards'}), (req, res) => {});
+router.post('/login', passport.authenticate('local', {failureRedirect: '/fail', successRedirect: '/boards'}));
 
 router.post('/register', if_exists, (req, res) => {
     const password = req.body.reg_password.trim();
@@ -22,7 +22,7 @@ router.post('/register', if_exists, (req, res) => {
         salt: salt_hash.salt
     })
     .save()
-    .then(user => console.log('Nowy uzytkownik: ' + user));
+    .then(user => console.log('[Database] New user: ' + user));
 
     res.redirect('/sign-user');   
 });
@@ -32,11 +32,12 @@ router.post('/board-create', (req, res) => {
         name: req.body.boardName,
         creatorId: req.user._id,
         creation_date: Date.now()
-    }).save();
+    }).save()
+    .then(board => console.log('[Database] New board: ' + board));
 });
 
 router.post('/board', (req, res) => {
-    const new_task = new Task({
+    new Task({
         title: req.body.taskName,
         description: req.body.taskDescription,
         image: req.body.taskImg,
@@ -45,9 +46,9 @@ router.post('/board', (req, res) => {
         // assigned_userId: req.body.user,
         category: req.body.taskCategory,
         creatorId: req.user._id
-    });
-
-    new_task.save();
+    })
+    .save()
+    .then(task => console.log('[Database] New task: ' + task));
 });
 
 ///////////////////////////////////////////////////////////////////
