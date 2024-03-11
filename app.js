@@ -41,7 +41,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/src/views'));
 app.use(routes);
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
     res.status(500).json({
         status: res.statusCode,
         msg: 'Internal server error'
