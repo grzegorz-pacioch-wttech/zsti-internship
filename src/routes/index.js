@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const { Hash_Password } = require('../lib/hash_utilities');
-const { is_auth/*, if_exists*/ } = require('../lib/middlewares/auth_check');
+const { is_auth, if_exists } = require('../lib/middlewares/auth_check');
 const User = require('../models/user');
 const Task = require('../models/task');
 
@@ -9,7 +9,7 @@ const Task = require('../models/task');
 
 router.post('/login', passport.authenticate('local', {failureRedirect: '/fail', successRedirect: '/board'}), (req, res) => {});
 
-router.post('/register', /*if_exists,*/ (req, res) => {
+router.post('/register', if_exists, (req, res) => {
     const password = req.body.reg_password.trim();
     const username = req.body.reg_username.trim();
 
