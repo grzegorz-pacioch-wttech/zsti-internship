@@ -6,14 +6,18 @@
         <title>Kanbanos</title>
     </head>
     <body>
+        
         <h1>Welcome, user: <%=data.username%></h1>
         <h2>Board browser</h2>
         <form action="/board-search" method="get">
             <select name="board-list" id="board-list">
-                <%=data.user_boards%>
+                <% data.user_boards.forEach(board => { %>
+                <%- `<option value=${board._id}>${board.name}</option>` %>
+                <% }); %>
             </select>
         </form>
         <br>
+        <h2>Board creator</h2>
         <form action="/board-create" method="post">
             <input type="text" name="boardName" id="boardName" placeholder="boardName">
             <input type="submit" name="submit" value="Submit">
