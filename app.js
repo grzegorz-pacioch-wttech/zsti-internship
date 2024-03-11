@@ -42,7 +42,11 @@ app.set('views', path.join(__dirname, '/src/views'));
 app.use(routes);
 
 app.use((err, req, res) => {
-    res.json({err: err});
+    res.status(500).json({
+        status: res.statusCode,
+        msg: 'Internal server error'
+    });
+    console.log(err);
 });
 
 app.listen(process.env.PORT);
