@@ -77,6 +77,11 @@ router.get('/board', is_auth, (req, res) => {
     res.render('board');
 });
 
+router.get('/logout', (req, res) => {
+    req.logout();
+    res.json({msg: 'Successfully logged out'});
+});
+
 router.get('*', (req, res) => {
     res.status(404).json({
         status: res.statusCode,
