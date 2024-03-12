@@ -6,6 +6,12 @@
     </div>
     <div class="task-bot">
         <div class="task-title"><%=task.title%></div>
-        <div class="task-deadline">until: <%=task.end_date%></div>
+        <div class="task-deadline">
+            until:
+            <% const date = new Date(task.end_date); %>
+            <%= date.toLocaleDateString('en-US', {day: 'numeric', month: 'long'}); %>
+            ,
+            <%= date.toLocaleTimeString('en-US', {hourCycle: 'h23', hour: '2-digit', minute: '2-digit'});  %>
+        </div>
     </div>
 </div>
