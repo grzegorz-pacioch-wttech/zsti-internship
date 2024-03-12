@@ -36,8 +36,9 @@ router.post('/board-create', (req, res) => {
     .then(board => console.log('[Database] New board: ' + board));
 });
 
-router.post('/board', (req, res) => {
+router.post('/board/:id', (req, res) => {
     new Task({
+        boardId: req.params.id,
         title: req.body.taskName,
         description: req.body.taskDescription,
         image: req.body.taskImg,
@@ -80,7 +81,8 @@ router.get('/boards', is_auth, async (req, res) => {
 
 router.get('/board/:id', is_auth, async (req, res) => {
     const data = {
-        board: await Board.findById(req.params.id).exec()
+        board: await Board.findById(req.params.id).exec(),
+        tasks: await Task.find({boardId: req.params.id}).exec()
     };
     res.render('board', {data});
 });
