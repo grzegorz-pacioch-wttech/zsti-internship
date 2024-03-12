@@ -40,7 +40,7 @@ router.post('/board/:id', (req, res) => {
     new Task({
         boardId: req.params.id,
         title: req.body.taskName,
-        description: req.body.taskDescription,
+        description: req.body.taskDesc,
         image: req.body.taskImg,
         creation_date: Date.now(),
         end_date: req.body.taskDeadline,

@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>Kanbanos</title>
         <link rel="stylesheet" href="/css/board.css">
+        <link rel="stylesheet" href="/css/task.css">
     </head>
     <body>
         <header>
@@ -23,7 +24,11 @@
                 <div class="item item4">Waiting</div>
                 <div class="item item5">Working</div>
                 <div class="item item7">
-                    <div class="task s"></div>
+                    <% if(data.tasks.length > 0){ %>
+                    <%      data.tasks.forEach(task => { %>
+                    <%-         include('./templates/task-normal', {task}); %>
+                    <%       }); %>    
+                    <% }; %>
                 </div>
                 <div class="item item7">
                     <div class="task n"></div>
