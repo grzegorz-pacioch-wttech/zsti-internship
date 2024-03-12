@@ -51,6 +51,10 @@ router.post('/board', (req, res) => {
     .then(task => console.log('[Database] New task: ' + task));
 });
 
+router.post('/board-search', (req, res) => {
+    res.redirect(`board/${req.body.board_list}`);
+});
+
 ///////////////////////////////////////////////////////////////////
 
 router.get('/', (req, res) => {
@@ -74,8 +78,11 @@ router.get('/boards', is_auth, async (req, res) => {
     res.render('board-browser', {data});
 });
 
-router.get('/board', is_auth, (req, res) => {
-    res.render('board');
+router.get('/board/:id', is_auth, async (req, res) => {
+    const data = {
+        board: await Board.findById(req.params.id).exec()
+    };
+    res.render('board', {data});
 });
 
 router.get('/logout', (req, res) => {

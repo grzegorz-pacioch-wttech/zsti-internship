@@ -9,12 +9,13 @@
         
         <h1>Welcome, user: <%=data.username%></h1>
         <h2>Board browser</h2>
-        <form action="/board-search" method="get">
-            <select name="board-list" id="board-list">
+        <form action="/board-search" method="post">
+            <select name="board_list" id="board_list">
                 <% data.user_boards.forEach(board => { %>
                 <%- `<option value=${board._id}>${board.name}</option>` %>
                 <% }); %>
             </select>
+            <input type="submit" name="submit" value="Submit">
         </form>
         <br>
         <h2>Board creator</h2>
