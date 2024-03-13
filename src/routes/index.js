@@ -84,11 +84,17 @@ router.get('/board/:id', is_auth, async (req, res) => {
         board: await Board.findById(req.params.id).exec(),
         tasks: await Task.find({boardId: req.params.id}).exec()
     };
-    res.render('board', {data});
+
+    if (data.board.creatorId.equals(req.user._id)) res.render('board', {data});
+    else res.status(401).json({
+        status: res.statusCode,
+        msg: 'Not authorized'
+    });
+    
 });
 
 router.get('/logout', (req, res) => {
-    req.logout();
+    req.logout(err => console.log(err));
     res.json({msg: 'Successfully logged out'});
 });
 
