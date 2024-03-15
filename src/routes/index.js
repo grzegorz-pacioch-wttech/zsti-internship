@@ -8,7 +8,7 @@ const Board = require('../models/board');
 
 /////////////////////////////////////////////////////////////////////
 
-router.post('/login', passport.authenticate('local', {failureRedirect: '/fail', successRedirect: '/boards'}));
+router.post('/login', passport.authenticate('local', {failureRedirect: '/signin-fail', successRedirect: '/boards'}));
 
 router.post('/register', if_exists, (req, res) => {
     const password = req.body.reg_password.trim();
@@ -56,6 +56,8 @@ router.post('/board/:id', (req, res) => {
 
 router.post('/board-search', (req, res) => {
     res.redirect(`board/${req.body.board_list}`);
+
+    // check if board exists
 });
 
 ///////////////////////////////////////////////////////////////////
@@ -68,9 +70,12 @@ router.get('/sign-user', (req, res) => {
     res.render('account-form');
 });
 
-router.get('/fail', (req, res) =>
+router.get('/signin-fail', (req, res) =>
 {
-    res.send('fail');
+    res.status(401).render('message', {
+        status: res.statusCode,
+        msg: 'Sign in unsuccessful'
+    });
 });
 
 router.get('/boards', is_auth, async (req, res) => {
@@ -86,30 +91,33 @@ router.get('/board/:id', is_auth, async (req, res) => {
         board: await Board.findById(req.params.id).exec(),
         tasks: await Task.find({boardId: req.params.id}).exec()
     };
-
+    // check if board id exists
     if (data.board.creatorId.equals(req.user._id)) res.render('board', {data});
-    else res.status(401).render('views/message', {
+    else res.status(401).render('message', {
         status: res.statusCode,
         msg: 'Not authorized'
     });
     
 });
 
-router.get('/logout', (req, res) => {
-    req.logout();
-    res.status(200).render('views/message', {
+router.get('/logout', (req, res, next) => {
+    req.logout(err => {
+        if(err) return next(err);
+    });
+    res.status(200).render('message', {
         status: res.statusCode,
-        msg: 'Successfully logged out'
+        msg: 'Successfully signed out'
     });
     
 });
 
 router.get('*', (req, res) => {
-    res.status(404).render('views/message', {
+    res.status(404).render('message', {
         status: res.statusCode,
         msg: 'Page not found'
     });
-    
 });
+
+
 
 module.exports = router;
