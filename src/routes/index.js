@@ -55,7 +55,7 @@ router.post('/board/:id', (req, res) => {
 });
 
 router.post('/board-search', (req, res) => {
-    if (req.body.board_list != '') res.redirect(`board/${req.body.board_list}`);
+    if (req.body.board_list != undefined) res.redirect(`board/${req.body.board_list}`);
     else res.redirect('/board-search');
 });
 
@@ -88,15 +88,24 @@ router.get('/boards', is_auth, async (req, res) => {
 router.get('/board/:id', is_auth, async (req, res) => {
     const data = {
         board: await Board.findById(req.params.id).exec(),
-        tasks: await Task.find({boardId: req.params.id}).exec()
+        tasks: ''
     };
-    // check if board id exists
-    if (data.board.creatorId.equals(req.user._id)) res.render('board', {data});
-    else res.status(401).render('message', {
-        status: res.statusCode,
-        msg: 'Not authorized'
-    });
-    
+
+    if (data.board != undefined || data.board.length <= 0) {
+        data.tasks = await Task.find({boardId: req.params.id}).exec();
+
+        if (data.board.creatorId.equals(req.user._id)) res.render('board', {data});
+        else res.status(401).render('message', {
+            status: res.statusCode,
+            msg: 'Not authorized'
+        });
+
+    } else {
+        res.status(404).render('message', {
+            status: res.statusCode,
+            msg: 'Board not found'
+        });
+    }    
 });
 
 router.get('/logout', (req, res, next) => {
