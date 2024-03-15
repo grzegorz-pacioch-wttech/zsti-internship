@@ -34,7 +34,8 @@ router.post('/board-create', (req, res) => {
         creation_date: Date.now()
     }).save();
     // .then(board => console.log('[Database] New board: ' + board));
-    res.redirect('/board-create');
+    res.redirect('/boards');
+    // check if board name already exists
 });
 
 router.post('/board/:id', (req, res) => {
