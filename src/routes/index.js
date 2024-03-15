@@ -55,9 +55,8 @@ router.post('/board/:id', (req, res) => {
 });
 
 router.post('/board-search', (req, res) => {
-    res.redirect(`board/${req.body.board_list}`);
-
-    // check if board exists
+    if (req.body.board_list != '') res.redirect(`board/${req.body.board_list}`);
+    else res.redirect('/board-search');
 });
 
 ///////////////////////////////////////////////////////////////////
