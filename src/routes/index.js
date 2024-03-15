@@ -88,7 +88,7 @@ router.get('/board/:id', is_auth, async (req, res) => {
     };
 
     if (data.board.creatorId.equals(req.user._id)) res.render('board', {data});
-    else res.status(401).json({
+    else res.status(401).render('views/message', {
         status: res.statusCode,
         msg: 'Not authorized'
     });
@@ -97,14 +97,19 @@ router.get('/board/:id', is_auth, async (req, res) => {
 
 router.get('/logout', (req, res) => {
     req.logout();
-    res.json({msg: 'Successfully logged out'});
+    res.status(200).render('views/message', {
+        status: res.statusCode,
+        msg: 'Successfully logged out'
+    });
+    
 });
 
 router.get('*', (req, res) => {
-    res.status(404).json({
+    res.status(404).render('views/message', {
         status: res.statusCode,
-        msg: 'Error: Page not found'
+        msg: 'Page not found'
     });
+    
 });
 
 module.exports = router;
