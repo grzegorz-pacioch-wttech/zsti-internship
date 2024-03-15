@@ -6,13 +6,18 @@ body {
     background-color: #f4f4f4;
 }
 
-div{
+.container{
+    text-align: center;
+}
+
+.bg-container{
     background-color: #D9D9D9;
     width: 600px;
     height: auto;
     margin: auto;
     text-align: center;
     border-radius: 20px;
+    padding: 10px;
 }
 
 form {
