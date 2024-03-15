@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tablica Kanban</title>
+    <link rel="stylesheet" href="/css/board.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://path/to/jquery-ui-draggable-collision.js"></script>
+
+</head>
+<body>
+
+<header>
+    <a href="login.html">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.6515 19.4054C20.2043 19.2902 20.5336 18.7117 20.2589 18.2183C19.6533 17.1307 18.6993 16.1749 17.4788 15.4465C15.907 14.5085 13.9812 14 12 14C10.0188 14 8.09292 14.5085 6.52112 15.4465C5.30069 16.1749 4.34666 17.1307 3.74108 18.2183C3.46638 18.7117 3.79562 19.2902 4.34843 19.4054C9.39524 20.4572 14.6047 20.4572 19.6515 19.4054Z" fill="#222222"/>
+            <circle cx="12" cy="8" r="5" fill="#222222"/>
+        </svg>
+    </a>
+
+</header>
+
+
+<div class="grid-container">
+    <div class="item item1">Backlog</div>
+    <div class="item item2">In progress</div>
+    <div class="item item3">Done</div>
+    <div class="item item4">Waiting</div>
+    <div class="item item5">Working</div>
+    <div class="item item7">
+        <div class="task s"></div>
+    </div>
+    <div class="item item7">
+        <div class="task n"></div>
+    </div>
+    <div class="item item7">
+        <div class="task r"></div>
+    </div>
+    <div class="item item7">
+        <div class="task s"></div>
+    </div>
+
+</div>
+
+
+
+
+
+<button id="addTaskButton">
+    <svg width="24" height="24" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M14.875 8.5C14.875 12.0208 12.0208 14.875 8.5 14.875C4.97918 14.875 2.125 12.0208 2.125 8.5C2.125 4.97918 4.97918 2.125 8.5 2.125C12.0208 2.125 14.875 4.97918 14.875 8.5ZM8.5 13.0417C7.94772 13.0417 7.5 12.594 7.5 12.0417V9.5H4.95833C4.40605 9.5 3.95833 9.05228 3.95833 8.5C3.95833 7.94772 4.40605 7.5 4.95833 7.5H7.5V4.95833C7.5 4.40605 7.94772 3.95833 8.5 3.95833C9.05228 3.95833 9.5 4.40605 9.5 4.95833V7.5H12.0417C12.594 7.5 13.0417 7.94772 13.0417 8.5C13.0417 9.05228 12.594 9.5 12.0417 9.5H9.5V12.0417C9.5 12.594 9.05228 13.0417 8.5 13.0417Z" fill="white"/>
+    </svg>
+    Add task
+</button>
+
+<div id="formContainerWrapper" style="display: none;">
+    <div id="formContainer">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"  id="closeSvg">
+            <path d="M18 6L6 18" stroke="#33363F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="#33363F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <form id="taskForm" method="post">
+            <div class="input-group">
+                <label for="taskName">Task Name:</label>
+                <input type="text" id="taskName" name="taskName" required>
+            </div>
+            <div class="input-group">
+                <label for="opis">Opis:</label>
+                <input type="text" id="opis" name="opis" required>
+            </div>
+            <div class="input-group">
+                <label for="pic">Wybierz zdjęcie</label>
+                <input type="file" id="pic" name="pic" accept="image/*">
+            </div>
+            <div class="input-group">
+                <label for="category">Kategoria:</label>
+                <select id="category" name="category">
+                    <option value="option1">Bojowe zadanie</option>
+                    <option value="option2">Ważne</option>
+                    <option value="option3">Najważniejsze z nieważnych</option>
+                    <option value="option4">Nieważne</option>
+                </select>
+                <div class="input-group">
+                    <label for="taskDeadline">Deadline:</label>
+                    <input type="datetime-local" id="taskDeadline" name="taskDeadline">
+                </div>
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html>
