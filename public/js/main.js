@@ -1,43 +1,33 @@
-document.addEventListener('DOMContentLoaded', function() {
-    let tasks = document.querySelectorAll('.task');
-    let isDown = false;
-    let offset = [0, 0];
-    let currentElement;
-
-    tasks.forEach(function(task) {
-        task.addEventListener('mousedown', function(e) {
-            isDown = true;
-            currentElement = task;
-            offset = [
-                task.offsetLeft - e.clientX,
-                task.offsetTop - e.clientY
-            ];
-        }, true);
-
-        task.addEventListener('mouseup', function() {
-            isDown = false;
-        }, true);
+$(document).ready(function() {
+    $('.task').draggable({
+        revert: 'invalid',
+        revertDuration: 200,
+        helper: 'clone',
+        start: function(event, ui) {
+            $('.task').addClass('ui-draggable-dragging');
+        },
+        stop: function(event, ui) {
+            $('.task').removeClass('ui-draggable-dragging');
+        }
     });
 
-    document.addEventListener('mousemove', function(event) {
-        event.preventDefault();
-        if (isDown && currentElement) {
-            let mousePosition = {
-                x: event.clientX,
-                y: event.clientY
-            };
-            currentElement.style.left = (mousePosition.x + offset[0]) + 'px';
-            currentElement.style.top = (mousePosition.y + offset[1]) + 'px';
+    $('.item7').droppable({
+        accept: '.task',
+        drop: function(event, ui) {
+            $(this).append(ui.draggable);
+            ui.draggable.removeClass('ui-draggable-dragging');
         }
-    }, true);
+    });
 });
 
 
 
+
+
+
+
 document.getElementById('addTaskButton').addEventListener('click', function() {
-    document.getElementById('formContainer').style.display = 'block';
-    document.querySelector("body").style.backgroundColor = 'Gray';
-    document.querySelector("header").style.backgroundColor = '#ABAAAA';
+    document.getElementById('formContainerWrapper').style.display = 'block';
 });
 
 
@@ -66,5 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    let svg = document.getElementById('closeSvg');
+    svg.addEventListener('click', function() {
+        let formContainerWrapper = document.getElementById('formContainerWrapper');
+        formContainerWrapper.style.display = 'none';
+    });
+});
+
 
 
