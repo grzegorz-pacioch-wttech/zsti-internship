@@ -21,8 +21,8 @@ router.post('/register', if_exists, (req, res) => {
         hash: salt_hash.hash,
         salt: salt_hash.salt
     })
-    .save()
-    .then(user => console.log('[Database] New user: ' + user));
+    .save();
+    // .then(user => console.log('[Database] New user: ' + user));
 
     res.redirect('/sign-user');   
 });
@@ -32,8 +32,9 @@ router.post('/board-create', (req, res) => {
         name: req.body.boardName,
         creatorId: req.user._id,
         creation_date: Date.now()
-    }).save()
-    .then(board => console.log('[Database] New board: ' + board));
+    }).save();
+    // .then(board => console.log('[Database] New board: ' + board));
+    res.redirect('/board-create');
 });
 
 router.post('/board/:id', (req, res) => {
@@ -48,8 +49,9 @@ router.post('/board/:id', (req, res) => {
         category: req.body.taskCategory,
         creatorId: req.user._id
     })
-    .save()
-    .then(task => console.log('[Database] New task: ' + task));
+    .save();
+    // .then(task => console.log('[Database] New task: ' + task));
+    res.redirect(`/board/${req.params.id}`);
 });
 
 router.post('/board-search', (req, res) => {
@@ -94,7 +96,7 @@ router.get('/board/:id', is_auth, async (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-    req.logout(err => console.log(err));
+    req.logout();
     res.json({msg: 'Successfully logged out'});
 });
 
