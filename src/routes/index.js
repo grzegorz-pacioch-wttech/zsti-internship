@@ -55,6 +55,13 @@ router.post('/board/:id', (req, res) => {
     res.redirect(`/board/${req.params.id}`);
 });
 
+router.post('/board/:id/change-columns', async (req, res) => {
+    const board = await Board.findById(req.params.id).exec();
+    board[req.body.id + '_name'] = req.body.value.trim();
+    board.save();
+    // res.redirect(`/board/${req.params.id}`);
+});
+
 router.post('/board-search', (req, res) => {
     if (req.body.board_list != undefined) res.redirect(`board/${req.body.board_list}`);
     else res.redirect('/board-search');

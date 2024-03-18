@@ -32,10 +32,14 @@ document.getElementById('addTaskButton').addEventListener('click', function() {
 
 
 function promptForNewText(item) {
-    let newText = prompt("Wprowadź nowy tekst:", "");
-    if (newText) {
+    let newText = prompt("Wprowadź nowy tekst:", item.textContent);
+    if (newText && newText.trim()) {
         item.textContent = newText;
-        localStorage.setItem(item.className, newText);
+        $.ajax({
+            type: 'POST',
+            url: `${window.location.href}/change-columns`,
+            data: {id: item.getAttribute('id'), value: newText}
+        });
     }
 }
 
