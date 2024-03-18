@@ -21,11 +21,11 @@
         </header>
         <main>
             <div class="grid-container">
-                <div class="item item1">Backlog</div>
-                <div class="item item2">In progress</div>
-                <div class="item item3">Done</div>
-                <div class="item item4">Waiting</div>
-                <div class="item item5">Working</div>
+                <div id="column1" class="item item1"><%=data.board.column1_name%></div>
+                <div id="column2" class="item item2"><%=data.board.column2_name%></div>
+                <div id="column3" class="item item3"><%=data.board.column3_name%></div>
+                <div id="column21" class="item item4"><%=data.board.column21_name%></div>
+                <div id="column22" class="item item5"><%=data.board.column22_name%></div>
                 <div class="item item7">
                     <% if(data.tasks.length > 0){ %>
                     <%      data.tasks.forEach(task => { %>
