@@ -15,6 +15,8 @@ const path = require('path');
 ////////////////////////////////////////////////////////////////////
 
 app.use(express.static('public'));
+app.use('/scripts', express.static('node_modules/jquery/dist/'));
+app.use('/scripts', express.static('node_modules/jquery-ui/dist/'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
