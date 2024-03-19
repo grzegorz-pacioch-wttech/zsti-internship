@@ -26,21 +26,34 @@
                 <div id="column3" class="item item3"><%=data.board.column3_name%></div>
                 <div id="column21" class="item item4"><%=data.board.column21_name%></div>
                 <div id="column22" class="item item5"><%=data.board.column22_name%></div>
-                <div class="item item7">
-                    <% if(data.tasks.length > 0){ %>
-                    <%      data.tasks.forEach(task => { %>
-                    <%-         include('./templates/task-normal', {task}); %>
-                    <%       }); %>    
-                    <% }; %>
+                <% let col1 = [], col2 = [], col3 = [], col4 = []; %>
+                <% if(data.tasks.length > 0){ %>
+                <%      data.tasks.forEach(task => { %>
+                <%          if(task.column == 1) { col1.push(task); } else if(task.column == 2) { col2.push(task); } else if(task.column == 3) { col3.push(task); } else if(task.column == 4) { col4.push(task); }}); %>   
+                <% } %>
+                <div class="item item7 space1">
+                    <div class="task"></div>
+                    <% col1.forEach(task =>{ %>
+                    <%-     include('./templates/task-normal', {task}) %>
+                    <% }); %>
                 </div>
-                <div class="item item7">
-                    <div class="task n"></div>
+                <div class="item item7 space2">
+                    <div class="task"></div>
+                    <% col2.forEach(task =>{ %>
+                    <%-     include('./templates/task-normal', {task}) %>
+                    <% }); %>
                 </div>
-                <div class="item item7">
-                    <div class="task r"></div>
+                <div class="item item7 space3">
+                    <div class="task"></div>
+                    <% col3.forEach(task =>{ %>
+                    <%-     include('./templates/task-normal', {task}) %>
+                    <% }); %>
                 </div>
-                <div class="item item7">
-                    <div class="task s"></div>
+                <div class="item item7 space4">
+                    <div class="task"></div>
+                    <% col4.forEach(task =>{ %>
+                    <%-     include('./templates/task-normal', {task}) %>
+                    <% }); %>
                 </div>
             </div>
             <button id="addTaskButton">
