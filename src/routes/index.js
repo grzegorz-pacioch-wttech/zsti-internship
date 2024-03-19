@@ -64,7 +64,8 @@ router.post('/board/:id/change-columns', async (req, res) => {
 
 router.post('/board/:id/update-task-location', async (req, res) => {
     const task = await Task.findById(req.body.id).exec();
-    task.column = req.body.column;
+    task.column = parseInt(req.body.column);
+    task.row = parseInt(req.body.row);
     task.save();
 });
 
