@@ -31,25 +31,25 @@
                 <%      data.tasks.forEach(task => { %>
                 <%          if(task.column == 1) { col1.push(task); } else if(task.column == 2) { col2.push(task); } else if(task.column == 3) { col3.push(task); } else if(task.column == 4) { col4.push(task); }}); %>   
                 <% } %>
-                <div class="item item7 space1">
+                <div id="space1" class="item item7">
                     <div class="task"></div>
                     <% col1.forEach(task =>{ %>
                     <%-     include('./templates/task-normal', {task}) %>
                     <% }); %>
                 </div>
-                <div class="item item7 space2">
+                <div id="space2" class="item item7">
                     <div class="task"></div>
                     <% col2.forEach(task =>{ %>
                     <%-     include('./templates/task-normal', {task}) %>
                     <% }); %>
                 </div>
-                <div class="item item7 space3">
+                <div id="space3" class="item item7">
                     <div class="task"></div>
                     <% col3.forEach(task =>{ %>
                     <%-     include('./templates/task-normal', {task}) %>
                     <% }); %>
                 </div>
-                <div class="item item7 space4">
+                <div id="space4" class="item item7">
                     <div class="task"></div>
                     <% col4.forEach(task =>{ %>
                     <%-     include('./templates/task-normal', {task}) %>

@@ -62,6 +62,12 @@ router.post('/board/:id/change-columns', async (req, res) => {
     // res.redirect(`/board/${req.params.id}`);
 });
 
+router.post('/board/:id/update-task-location', async (req, res) => {
+    const task = await Task.findById(req.body.id).exec();
+    task.column = req.body.column;
+    task.save();
+});
+
 router.post('/board-search', (req, res) => {
     if (req.body.board_list != undefined) res.redirect(`board/${req.body.board_list}`);
     else res.redirect('/board-search');
