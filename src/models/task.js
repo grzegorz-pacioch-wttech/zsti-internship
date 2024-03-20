@@ -12,7 +12,7 @@ const task_schema = new mongoose.Schema({
     creatorId : {type: ObjectId, required: true},
     assigned_userId : {type: ObjectId},
     column : {type: Number, required: true, default: 1},
-    row : {type: Number, required: true, default: 1}
+    row : {type: Number, required: true, default: 0}
 });
 
 const Task = mongoose.model('Task', task_schema);
