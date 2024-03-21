@@ -97,7 +97,8 @@ router.get('/signin-fail', (req, res) =>
 router.get('/boards', is_auth, async (req, res) => {
     const data = {
         username: req.user.username,
-        user_boards: await Board.find({creatorId: req.user._id}).exec()
+        user_boards: await Board.find({creatorId: req.user._id}).exec(),
+        collab_boards: await Board.find({collab_usersId: req.user._id}).exec() // test if multiple users id will pass
     };
     res.render('board-browser', {data});
 });
@@ -111,7 +112,7 @@ router.get('/board/:id', is_auth, async (req, res) => {
     if (data.board != undefined || data.board.length <= 0) {
         data.tasks = await Task.find({boardId: req.params.id}).exec();
 
-        if (data.board.creatorId.equals(req.user._id)) res.render('board', {data});
+        if (data.board.creatorId.equals(req.user._id) || data.board.collab_usersId.equals(req.user._id)) res.render('board', {data});
         else res.status(401).render('message', {
             status: res.statusCode,
             msg: 'Not authorized'
