@@ -1,17 +1,55 @@
 <div class="task">
-    <div class="task-top">
-        <div class="text-area">
-            <%=task.description%>
-        </div>
+  <div class="task-top">
+
+    <div class="dropdown">
+      <button onclick="myFunction()" class="dropbtn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.5 2.5H13.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4.5 7H13.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4.5 11.5H13.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div id="myDropdown" class="dropdown-content">
+        <a href="#">Edytowanie</a>
+        <a href="#">Usuwanie</a>
+      </div>
     </div>
-    <div class="task-bot">
-        <div class="task-title"><%=task.title%></div>
-        <div class="task-deadline">
-            until:
-            <% const date = new Date(task.end_date); %>
-            <%= date.toLocaleDateString('en-US', {day: 'numeric', month: 'long'}); %>
-            ,
-            <%= date.toLocaleTimeString('en-US', {hourCycle: 'h23', hour: '2-digit', minute: '2-digit'});  %>
-        </div>
+
+    <div class="text-area">
+      <%=task.description%>
     </div>
+
+  </div>
+  <div class="task-bot">
+    <div class="task-title"><%=task.title%></div>
+    <div class="task-deadline">
+      until:
+      <% const date = new Date(task.end_date); %>
+      <%= date.toLocaleDateString('en-US', {day: 'numeric', month: 'long'}); %>
+      ,
+      <%= date.toLocaleTimeString('en-US', {hourCycle: 'h23', hour: '2-digit', minute: '2-digit'});  %>
+    </div>
+  </div>
 </div>
+
+
+
+<script>
+  function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+
+  // Close the dropdown if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      let dropdowns = document.getElementsByClassName("dropdown-content");
+      let i;
+      for (i = 0; i < dropdowns.length; i++) {
+        let openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
+</script>
