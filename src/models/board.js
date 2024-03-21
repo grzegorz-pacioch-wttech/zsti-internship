@@ -5,7 +5,7 @@ const Board = mongoose.model('Board',
     new mongoose.Schema({
         name : {type: String, required: true},
         creatorId : {type: ObjectId, required: true},
-        collab_usersId : {type: ObjectId, required: false},
+        collab_usersId : {type: [ObjectId], required: false},
         creation_date : {type: Date, required: true},
         column1_name : {type: String, required: true, default: 'Backlog'},
         column2_name : {type: String, required: true, default: 'In progress'},
