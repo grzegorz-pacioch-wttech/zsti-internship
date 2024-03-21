@@ -15,7 +15,7 @@
     <h2>Board browser</h2>
     <form action="/board-search" method="post">
       <select name="board_list" required>
-        <option disabled selected>Your boards</option>
+        <option disabled>Your boards</option>
         <% data.user_boards.forEach(board => { %>
         <%- `<option value=${board._id}>${board.name}</option>` %>
         <% }); %>
@@ -36,7 +36,7 @@
     <h2>Add other users</h2>
     <form action="/add-collab-user" method="post">
       <select name="board_list" required>
-        <option disabled selected>Your boards</option>
+        <option disabled>Your boards</option>
         <% data.user_boards.forEach(board => { %>
         <%- `<option value=${board._id}>${board.name}</option>` %>
         <% }); %>
