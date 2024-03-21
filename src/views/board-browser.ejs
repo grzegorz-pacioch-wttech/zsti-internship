@@ -9,23 +9,41 @@
 <body>
 
 <div class="container">
-  <h1>Welcome, user: <%=data.username%></h1>
+  <h1>Welcome, <%=data.username%></h1>
 
   <div class="bg-container">
-  <h2>Board browser</h2>
-  <form action="/board-search" method="post">
-    <select name="board_list" id="board_list">
-      <% data.user_boards.forEach(board => { %>
-      <%- `<option value=${board._id}>${board.name}</option>` %>
-      <% }); %>
-    </select>
-    <input type="submit" name="submit" value="Submit">
-  </form>
-  <h2>Board creator</h2>
-  <form action="/board-create" method="post">
-    <input type="text" name="boardName" id="boardName" required>
-    <input type="submit" name="submit" value="Submit">
-  </form>
+    <h2>Board browser</h2>
+    <form action="/board-search" method="post">
+      <select name="board_list" required>
+        <option disabled selected>Your boards</option>
+        <% data.user_boards.forEach(board => { %>
+        <%- `<option value=${board._id}>${board.name}</option>` %>
+        <% }); %>
+        <option disabled>Collab boards</option>
+        <% data.collab_boards.forEach(board => { %>
+        <%-  `<option value=${board._id}>Collab board: ${board.name}</option>` %>
+        <% }) %>
+      </select>
+      <input type="submit" name="submit" value="View">
+    </form>
+    <h2>Board creator</h2>
+    <form action="/board-create" method="post">
+      <input type="text" name="boardName" id="boardName" required placeholder="Board name">
+      <input type="submit" name="submit" value="Create">
+    </form>
+  </div>
+  <div class="bg-container">
+    <h2>Add other users</h2>
+    <form action="/add-collab-user" method="post">
+      <select name="board_list" required>
+        <option disabled selected>Your boards</option>
+        <% data.user_boards.forEach(board => { %>
+        <%- `<option value=${board._id}>${board.name}</option>` %>
+        <% }); %>
+      </select>
+      <input type="text" name="collabUsername" required placeholder="User name">
+      <input type="submit" name="submit" value="Add">
+    </form>
   </div>
 </div>
 </body>
