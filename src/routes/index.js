@@ -2,6 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 const { Hash_Password } = require('../lib/hash_utilities');
 const { is_auth, if_exists } = require('../lib/middlewares/auth_check');
+const { task_save } = require('../lib/save_utilties');
 const User = require('../models/user');
 const Task = require('../models/task');
 const Board = require('../models/board');
@@ -39,7 +40,7 @@ router.post('/board-create', (req, res) => {
 });
 
 router.post('/board/:id', (req, res) => {
-    new Task({
+    const task= {
         boardId: req.params.id,
         title: req.body.taskName,
         description: req.body.taskDesc,
@@ -49,8 +50,9 @@ router.post('/board/:id', (req, res) => {
         // assigned_userId: req.body.user,
         category: req.body.taskCategory,
         creatorId: req.user._id
-    })
-    .save();
+    };
+    task_save(task);
+
     // .then(task => console.log('[Database] New task: ' + task));
     res.redirect(`/board/${req.params.id}`);
 });
@@ -60,6 +62,13 @@ router.post('/board/:id/change-columns', async (req, res) => {
     board[req.body.id + '_name'] = req.body.value.trim();
     board.save();
     // res.redirect(`/board/${req.params.id}`);
+});
+
+router.post('/board/:id/update-task-location', async (req, res) => {
+    const task = await Task.findById(req.body.id).exec();
+    task.column = parseInt(req.body.column);
+    task.row = parseInt(req.body.row);
+    task.save().catch(err => console.log(err));
 });
 
 router.post('/board-search', (req, res) => {

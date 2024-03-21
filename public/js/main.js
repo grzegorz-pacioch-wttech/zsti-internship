@@ -16,6 +16,19 @@ $(document).ready(function() {
         drop: function(event, ui) {
             $(this).append(ui.draggable);
             ui.draggable.removeClass('ui-draggable-dragging');
+
+            const task_id = ui.draggable.find('i').text();
+            const task_column = $(this).attr('id').slice(5);
+            const task_row = ui.draggable.index();
+            $.ajax({
+                type: 'POST',
+                url: `${window.location.href}/update-task-location`,
+                data: {
+                    id: task_id, 
+                    column: task_column,
+                    row: task_row
+                }
+            });
         }
     });
 });

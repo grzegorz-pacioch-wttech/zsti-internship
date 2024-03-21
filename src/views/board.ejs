@@ -26,21 +26,30 @@
                 <div id="column3" class="item item3"><%=data.board.column3_name%></div>
                 <div id="column21" class="item item4"><%=data.board.column21_name%></div>
                 <div id="column22" class="item item5"><%=data.board.column22_name%></div>
-                <div class="item item7">
-                    <% if(data.tasks.length > 0){ %>
-                    <%      data.tasks.forEach(task => { %>
-                    <%-         include('./templates/task-normal', {task}); %>
-                    <%       }); %>    
-                    <% }; %>
+                <% let col1 = [], col2 = [], col3 = [], col4 = []; %>
+                <% if(data.tasks.length > 0){ %>
+                <%      data.tasks.forEach(task => { %>
+                <%          if(task.column == 1) { col1.push(task); } else if(task.column == 2) { col2.push(task); } else if(task.column == 3) { col3.push(task); } else if(task.column == 4) { col4.push(task); }}); %>   
+                <% } %>
+                <div id="space1" class="item item7">
+                    <% col1.sort((a, b) => a.row - b.row).forEach(task => { %>
+                    <%-     include('./templates/task-normal', {task}) %>    
+                    <% }); %>
                 </div>
-                <div class="item item7">
-                    <div class="task n"></div>
+                <div id="space2" class="item item7">
+                    <% col2.sort((a, b) => a.row - b.row).forEach(task => { %>
+                    <%-     include('./templates/task-normal', {task}) %>    
+                    <% }); %>
                 </div>
-                <div class="item item7">
-                    <div class="task r"></div>
+                <div id="space3" class="item item7">
+                    <% col3.sort((a, b) => a.row - b.row).forEach(task => { %>
+                    <%-     include('./templates/task-normal', {task}) %>    
+                    <% }); %>
                 </div>
-                <div class="item item7">
-                    <div class="task s"></div>
+                <div id="space4" class="item item7">
+                    <% col4.sort((a, b) => a.row - b.row).forEach(task => { %>
+                    <%-     include('./templates/task-normal', {task}) %>    
+                    <% }); %>
                 </div>
             </div>
             <button id="addTaskButton">
