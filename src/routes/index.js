@@ -68,7 +68,21 @@ router.post('/board/:id/update-task-location', async (req, res) => {
     const task = await Task.findById(req.body.id).exec();
     task.column = parseInt(req.body.column);
     task.row = parseInt(req.body.row);
-    task.save().catch(err => console.log(err));
+    task.save();
+});
+
+router.post('/edit-task', async (req, res) => {
+    const task = await Task.findById(req.body.id).exec();
+    task.title = req.body.taskName;
+    task.description = req.body.taskDescription;
+    task.save();
+    res.redirect(`/board/${task.boardId}`);
+});
+
+router.post('/delete-task', async (req, res) => {
+    const task = await Task.findById(req.body.id).exec();
+    await Task.findByIdAndDelete(task._id);
+    res.redirect(`/board/${task.boardId}`);
 });
 
 router.post('/board-search', (req, res) => {

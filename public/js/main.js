@@ -31,6 +31,18 @@ $(document).ready(function() {
             });
         }
     });
+
+    // $('.delete-button').click(() => {
+    //     const task_id = $(this).find('i').text();
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: `${window.location.href}/delete-task`,
+    //         data: {
+    //             id: task_id
+    //         }
+    //     });
+    // })
+    
 });
 
 
@@ -83,4 +95,29 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+
+let dropbtns = document.getElementsByClassName('dropbtn');
+
+for (let i = 0; i < dropbtns.length; i++) {
+dropbtns[i].addEventListener('click', function() {
+  let dropdownContent = this.nextElementSibling;
+
+  dropdownContent.style.display === 'block' ?
+          dropdownContent.style.display = 'none' :
+          dropdownContent.style.display = 'block';
+});
+}
+
+let editbtns = document.getElementsByClassName('editbtn');
+
+for (let i = 0; i < dropbtns.length; i++) {
+  editbtns[i].addEventListener('click', function() {
+    let dropdownContent = this.nextElementSibling;
+
+    dropdownContent.style.display === 'block' ?
+            dropdownContent.style.display = 'none' :
+            dropdownContent.style.display = 'block';
+  });
+}
 

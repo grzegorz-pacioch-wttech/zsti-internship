@@ -47,7 +47,7 @@
     color: white;
     border: none;
     cursor: pointer;
-    background-color: #ff3737d5;
+    background-color: #ff373700;
 }
 
 .dropdown {
@@ -63,21 +63,21 @@
     position: absolute;
     min-width: 160px;
     overflow: auto;
-    z-index: 1;
+    z-index: 10;
 }
 
-.dropdown-content button {
+.dropdown-content button, .delete-button{
     color: white;
-    background: black;
+    background-color: black !important;
     padding: 5px 8px;
     text-decoration: none;
     display: block;
-    width: 130px;
+    width: 130px !important;
 }
 
-.dropdown-content button:hover {
+.dropdown-content button:hover, .delete-button:hover {
     color: black;
-    background: white;
+    background: white !important;
 }
 
 .formContainer {
@@ -93,6 +93,8 @@
     max-width: 100%;
     margin: 0 auto;
     position: fixed;
+    font-size: 15px;
+    z-index: 10;
     /*top: calc(50% - 120px);*/
     /*left: calc(50% - 320px);*/
 }
@@ -102,6 +104,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
+    z-index: 10;
 }
 
 .input-group {

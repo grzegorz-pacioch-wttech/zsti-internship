@@ -1,6 +1,6 @@
 <div class="task">
+  <i hidden><%=task.id%></i>
   <div class="task-top">
-
     <div class="dropdown">
       <button class="dropbtn">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10,25 +10,29 @@
         </svg>
       </button>
       <div class="dropdown-content" style="display: none;">
-        <button class="editbtn">Edytowanie</button>
+        <button class="editbtn">Edit</button>
           <div class="formContainer" style="display: none;">
-            <form class="taskForm" method="post">
+            <form class="taskForm" action="/edit-task" method="post">
+              <%-`<input type="hidden" value="${task.id}" name="id">`%>
               <div class="input-group">
-                <label>Task Name:</label>
+                <label>Name:</label>
                 <input type="text" class="taskName" name="taskName" required>
               </div>
               <div class="input-group">
-                <label>Opis:</label>
-                <input type="text" class="opis" name="opis" required>
+                <label>Description:</label>
+                <input type="text" class="taskDescription" name="taskDescription" required>
               </div>
               <div class="input-group">
-                <label>Wybierz zdjęcie</label>
-                <input type="file" class="pic" name="pic" accept="image/*">
+                <label>Image*:</label>
+                <input type="file" class="taskImage" name="taskImage" accept="image/*">
               </div>
-              <input type="submit" value="Submit">
+              <input type="submit" value="Edit">
             </form>
           </div>
-        <button>Usuwanie</button>
+          <form action="/delete-task" method="post">
+            <%-`<input type="hidden" value="${task.id}" name="id">`%>
+            <input type="submit" value="Delete" class="delete-button"></input>
+          </form>
       </div>
     </div>
 
@@ -49,32 +53,3 @@
     </div>
   </div>
 </div>
-
-
-<script>
-    let dropbtns = document.getElementsByClassName('dropbtn');
-
-    for (let i = 0; i < dropbtns.length; i++) {
-    dropbtns[i].addEventListener('click', function() {
-      let dropdownContent = this.nextElementSibling;
-
-      dropdownContent.style.display === 'block' ?
-              dropdownContent.style.display = 'none' :
-              dropdownContent.style.display = 'block';
-    });
-  }
-
-    let editbtns = document.getElementsByClassName('editbtn');
-
-    for (let i = 0; i < dropbtns.length; i++) {
-      editbtns[i].addEventListener('click', function() {
-        let dropdownContent = this.nextElementSibling;
-
-        dropdownContent.style.display === 'block' ?
-                dropdownContent.style.display = 'none' :
-                dropdownContent.style.display = 'block';
-      });
-    }
-
-
-</script>
