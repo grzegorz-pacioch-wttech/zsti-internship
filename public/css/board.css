@@ -76,7 +76,7 @@ body {
 
 
 
-button {
+button, .delete-button{
     width: 100px;
     height: 40px;
     background-color: #3000F0;
