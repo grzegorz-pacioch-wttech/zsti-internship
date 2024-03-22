@@ -10,7 +10,9 @@ const task_schema = new mongoose.Schema({
     creation_date : {type: Date, required: true},
     end_date : {type: Date},
     creatorId : {type: ObjectId, required: true},
-    assigned_userId : {type: ObjectId}
+    assigned_userId : {type: ObjectId},
+    column : {type: Number, required: true, default: 1},
+    row : {type: Number, required: true, default: 0}
 });
 
 const Task = mongoose.model('Task', task_schema);

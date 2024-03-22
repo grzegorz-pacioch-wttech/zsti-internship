@@ -16,8 +16,33 @@ $(document).ready(function() {
         drop: function(event, ui) {
             $(this).append(ui.draggable);
             ui.draggable.removeClass('ui-draggable-dragging');
+
+            const task_id = ui.draggable.find('i').text();
+            const task_column = $(this).attr('id').slice(5);
+            const task_row = ui.draggable.index();
+            $.ajax({
+                type: 'POST',
+                url: `${window.location.href}/update-task-location`,
+                data: {
+                    id: task_id, 
+                    column: task_column,
+                    row: task_row
+                }
+            });
         }
     });
+
+    // $('.delete-button').click(() => {
+    //     const task_id = $(this).find('i').text();
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: `${window.location.href}/delete-task`,
+    //         data: {
+    //             id: task_id
+    //         }
+    //     });
+    // })
+    
 });
 
 
@@ -32,10 +57,14 @@ document.getElementById('addTaskButton').addEventListener('click', function() {
 
 
 function promptForNewText(item) {
-    let newText = prompt("Wprowadź nowy tekst:", "");
-    if (newText) {
+    let newText = prompt("Wprowadź nowy tekst:", item.textContent);
+    if (newText && newText.trim()) {
         item.textContent = newText;
-        localStorage.setItem(item.className, newText);
+        $.ajax({
+            type: 'POST',
+            url: `${window.location.href}/change-columns`,
+            data: {id: item.getAttribute('id'), value: newText}
+        });
     }
 }
 
@@ -66,4 +95,29 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+
+let dropbtns = document.getElementsByClassName('dropbtn');
+
+for (let i = 0; i < dropbtns.length; i++) {
+dropbtns[i].addEventListener('click', function() {
+  let dropdownContent = this.nextElementSibling;
+
+  dropdownContent.style.display === 'block' ?
+          dropdownContent.style.display = 'none' :
+          dropdownContent.style.display = 'block';
+});
+}
+
+let editbtns = document.getElementsByClassName('editbtn');
+
+for (let i = 0; i < dropbtns.length; i++) {
+  editbtns[i].addEventListener('click', function() {
+    let dropdownContent = this.nextElementSibling;
+
+    dropdownContent.style.display === 'block' ?
+            dropdownContent.style.display = 'none' :
+            dropdownContent.style.display = 'block';
+  });
+}
 

@@ -35,7 +35,7 @@ body {
 
 .grid-container {
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     width: 100%;
 }
 
@@ -76,7 +76,7 @@ body {
 
 
 
-button {
+button, .delete-button{
     width: 100px;
     height: 40px;
     background-color: #3000F0;
