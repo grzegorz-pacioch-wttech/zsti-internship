@@ -86,8 +86,31 @@ router.post('/delete-task', async (req, res) => {
 });
 
 router.post('/board-search', (req, res) => {
-    if (req.body.board_list != undefined) res.redirect(`board/${req.body.board_list}`);
+    if (req.body.board_list !== undefined) res.redirect(`board/${req.body.board_list}`);
     else res.redirect('/board-search');
+});
+
+router.post('/add-collab-user', async (req, res) => {
+    const collab_user = await User.findOne({username: req.body.collabUsername}).lean().exec();
+    if (collab_user !== null){
+        const collab_board = await Board.findById(req.body.board_list).exec();
+        if (collab_board !== undefined) 
+        {
+
+            if (collab_board.collab_usersId.length <= 0) {
+                collab_board.collab_usersId = new Array();
+                collab_board.collab_usersId.push(collab_user._id);
+                collab_board.save();
+            }
+            else {
+                if (!collab_board.collab_usersId.some(id => id.equals(collab_user._id))) {
+                    collab_board.collab_usersId.push(collab_user._id);
+                    collab_board.save();
+                }
+            }
+        }
+    }
+    res.redirect('/boards');
 });
 
 ///////////////////////////////////////////////////////////////////
@@ -111,7 +134,8 @@ router.get('/signin-fail', (req, res) =>
 router.get('/boards', is_auth, async (req, res) => {
     const data = {
         username: req.user.username,
-        user_boards: await Board.find({creatorId: req.user._id}).exec()
+        user_boards: await Board.find({creatorId: req.user._id}).exec(),
+        collab_boards: await Board.find({collab_usersId: req.user._id}).exec() // test if multiple users id will pass
     };
     res.render('board-browser', {data});
 });
@@ -125,7 +149,7 @@ router.get('/board/:id', is_auth, async (req, res) => {
     if (data.board != undefined || data.board.length <= 0) {
         data.tasks = await Task.find({boardId: req.params.id}).exec();
 
-        if (data.board.creatorId.equals(req.user._id)) res.render('board', {data});
+        if (data.board.creatorId.equals(req.user._id) || data.board.collab_usersId.some(id => id.equals(req.user._id))) res.render('board', {data});
         else res.status(401).render('message', {
             status: res.statusCode,
             msg: 'Not authorized'
